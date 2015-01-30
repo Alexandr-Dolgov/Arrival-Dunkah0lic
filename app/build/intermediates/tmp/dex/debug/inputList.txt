@@ -1,0 +1,2 @@
+C:\Users\Nikolay\Downloads\markikokik-transarrival63-af3c98254b6a1\app\build\intermediates\classes\debug
+C:\Users\Nikolay\Downloads\markikokik-transarrival63-af3c98254b6a1\app\build\intermediates\pre-dexed\debug\support-v4-19.1.0-18db8d39c09cfd6f455745ef50b7051bbb853ea0.jar

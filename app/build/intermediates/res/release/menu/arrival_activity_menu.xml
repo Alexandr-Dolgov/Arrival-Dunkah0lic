@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_settings"
+        android:icon="@drawable/ic_action_settings"
+        android:title="Настройки"
+        android:showAsAction="ifRoom" />
+</menu><!-- From: file:/C:/Users/Nikolay/Downloads/markikokik-transarrival63-af3c98254b6a1/app/src/main/res/menu/arrival_activity_menu.xml -->
