@@ -110,21 +110,6 @@ public class ArrivalActivity extends Activity {
         ab.setSubtitle(st.direction);
         TextView tv;
 
-        /*tv = (TextView) findViewById(R.id.txtArrivalDirectionLabel);
-        dataMan.setTypeface(tv, HelveticaFont.Medium);
-
-        tv = (TextView) findViewById(R.id.txtArrivalStopName);
-        tv.setText(st.title);
-        dataMan.setTypeface(tv, HelveticaFont.Bold);
-
-        tv = (TextView) findViewById(R.id.txtArrivalStreet);
-        tv.setText(st.adjacentStreet);
-        dataMan.setTypeface(tv, HelveticaFont.Medium);
-
-        tv = (TextView) findViewById(R.id.txtArrivalDirection1);
-        tv.setText(st.direction);
-        dataMan.setTypeface(tv, HelveticaFont.Bold);*/
-
         task = new DownloadArrivalInfoTask();
 
         PullToRefreshListView mPullRefreshListView = (PullToRefreshListView) findViewById(R.id.arrivalList);

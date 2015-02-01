@@ -21,11 +21,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class StopSearchActivity extends Activity implements Serializable {
 
@@ -38,6 +41,7 @@ public class StopSearchActivity extends Activity implements Serializable {
     public final static String MESSAGE_ARRIVAl_INFO = "com.markikokik.transarrival63.arrivalInfo";
     public final static String MESSAGE_STOPGROUP = "com.markikokik.transarrival63.stopGroup";
     public final static String MESSAGE_DATAMAN = "com.markikokik.transarrival63.dataMan";
+    private static final String URL = "http://tosamara.ru/api/classifiers/routesAndStopsCorrespondence.xml";
 
     private boolean searchByNav = true;
     private boolean searchInFavor = false;
@@ -121,6 +125,9 @@ public class StopSearchActivity extends Activity implements Serializable {
 
         ActionBar ab = getActionBar();
         ab.setIcon(null);
+
+        //DownloadXmlTask task = new DownloadXmlTask();
+        //task.execute();
 
         /*EditText txt = ((EditText) findViewById(R.id.txtStopName));
 
@@ -597,6 +604,32 @@ public class StopSearchActivity extends Activity implements Serializable {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setMessage(promt).setTitle(title);
         builder.show();
+    }
+
+    private class DownloadXmlTask extends AsyncTask<Activity, Boolean, Boolean> {
+        @Override
+        protected Boolean doInBackground(Activity... parent) {
+            // Log.appendLog("ArrivalActivity DownloadArrivalInfoTask doInBackground");
+            try {
+                ArrayList<RouteStopBind> tmp = DataController.getInstance().getRoutesAndStopsInfo();
+                Log.v("DownloadXmlTask","arraySize() = " + tmp.size());
+                return true;
+            } catch (IOException e) {
+                String msg = e.getMessage();
+                Log.v("TAG!", msg);
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            //setContentView(R.layout.main);
+            // Displays the HTML string in the UI via a WebView
+            //WebView myWebView = (WebView) findViewById(R.id.webview);
+            //myWebView.loadData(result, "text/html", null);
+            Log.v("TAG!", "Task done");
+            Toast.makeText(getBaseContext(), "Task done", Toast.LENGTH_SHORT);
+        }
     }
 
 }

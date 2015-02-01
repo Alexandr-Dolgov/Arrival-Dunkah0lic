@@ -534,6 +534,58 @@ public class DataController implements Serializable {
         // }
     }
 
+    public ArrayList<RouteStopBind> getRoutesAndStopsInfo() throws NotFoundException, IOException {
+        try {
+//
+            return (new RoutesAndStopsXmlParser()).parse(loadRoutesAndStopDataAPI());
+//            }
+        } catch (XmlPullParserException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return new ArrayList<RouteStopBind>();
+        }
+        // if (DataController.getInstance().requestAddPredict) {
+        // return mergeArrival(
+        // parseArrivalInfo(loadArrivalData(phpBridgeAddress, KS_ID)),
+        // parseMapBubbleArrivalInfo(loadArrivalDataFromMapBubble(KS_ID)));
+        // } else {
+        // return parseArrivalInfo(loadArrivalData(phpBridgeAddress, KS_ID));
+        // }
+    }
+
+    public static String loadRoutesAndStopDataAPI() throws IOException {
+        String resultString = new String("");
+        try {
+            URLConnection connection = null;
+            URL url = new URL("http://tosamara.ru/api/classifiers/routesAndStopsCorrespondence.xml");
+
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            //urlConnection.setRequestMethod("GET");
+            //urlConnection.setDoOutput(true);
+            urlConnection.connect();
+
+            int responseCode = urlConnection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                InputStream in = urlConnection.getInputStream();
+                resultString = readStreamToString(in, "UTF-8");
+                in.close();
+            } else {
+                Log.v("TAG!!", "ServerNotRespond");
+                throw new IOException("ServerNotRespond");
+
+            }
+            urlConnection.disconnect();
+        } catch (MalformedURLException e) {
+            throw new IOException("MalformedURLException " + e.getMessage());
+        } catch (SocketTimeoutException e) {
+            throw new IOException("Timeout");
+        }
+
+        return resultString;
+        // "<?xml version='1.0' encoding='utf-8'?><arrival>  <transport>    <number>42</number>    <KR_ID>603</KR_ID>    <modelTitle>Fiat DUCATO</modelTitle>    <hullNo>48226</hullNo>    <nextStopId>332</nextStopId>    <timeInSeconds>105.99000000000001</timeInSeconds>    <stateNumber>ЕА854</stateNumber>    <forInvalid>false</forInvalid>    <nextStopName>ул. Льва Толстого</nextStopName>    <time>1</time>    <type>Автобус</type>    <spanLength>464.9</spanLength>    <remainingLength>162.7</remainingLength>  </transport>  <transport>    <number>2</number>    <KR_ID>12</KR_ID>    <modelTitle>НЕФАЗ5299-20-53</modelTitle>    <hullNo>48316</hullNo>    <nextStopId>941</nextStopId>    <timeInSeconds>345.89</timeInSeconds>    <stateNumber>ЕА970</stateNumber>    <forInvalid>false</forInvalid>    <nextStopName>Самарская площадь</nextStopName>    <time>5</time>    <type>Автобус</type>    <spanLength>558.0</spanLength>    <remainingLength>3.8</remainingLength>  </transport>  <transport>    <number>2</number>    <KR_ID>12</KR_ID>    <modelTitle>НЕФАЗ5299-30-33</modelTitle>    <hullNo>48250</hullNo>    <nextStopId>782</nextStopId>    <timeInSeconds>1388.33</timeInSeconds>    <stateNumber>ЕК052</stateNumber>    <forInvalid>true</forInvalid>    <nextStopName>КРЦ Звезда</nextStopName>    <time>23</time>    <type>Автобус</type>    <spanLength>824.0</spanLength>    <remainingLength>350.2</remainingLength>  </transport></arrival>";
+    }
+
     // API based
     public static ArrayList<ArrivalInfo> getRouteArrivalAPI(int KS_ID, int KR_ID, String who) throws NotFoundException, IOException, XmlPullParserException {
         Set<Integer> transTypesToShow = new HashSet<Integer>();
